@@ -15,3 +15,13 @@ spring:
 
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
+
+upload:
+  path: /path/to/upload/directory
+
+# 配置异步任务执行器
+async:
+  executor:
+    core-pool-size: 2
+    max-pool-size: 5
+    queue-capacity: 10

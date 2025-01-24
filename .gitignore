@@ -1,0 +1,17 @@
+target/classes/application.yml
+target/classes/db.sql
+target/classes/com/tencent/wxcloudrun/WxCloudRunApplication.class
+target/classes/com/tencent/wxcloudrun/config/ApiResponse.class
+target/classes/com/tencent/wxcloudrun/config/AsyncConfig.class
+target/classes/com/tencent/wxcloudrun/config/ImageParseRunner.class
+target/classes/com/tencent/wxcloudrun/controller/ImageController.class
+target/classes/com/tencent/wxcloudrun/controller/IndexController.class
+target/classes/com/tencent/wxcloudrun/dao/ImageMapper.class
+target/classes/com/tencent/wxcloudrun/model/Image.class
+target/classes/com/tencent/wxcloudrun/repository/ImageRepository.class
+target/classes/com/tencent/wxcloudrun/service/ImageService.class
+target/classes/com/tencent/wxcloudrun/service/impl/ImageServiceImpl.class
+target/classes/com/tencent/wxcloudrun/task/ImageParseTask.class
+target/classes/mapper/CountersMapper.xml
+target/classes/mapper/ImageMapper.xml
+target/classes/static/index.html
