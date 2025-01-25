@@ -14,7 +14,10 @@ spring:
       prefix: /
 
 mybatis:
-  mapper-locations: classpath*:mapper/*Mapper.xml
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.tencent.wxcloudrun.model
+  configuration:
+    map-underscore-to-camel-case: true
 
 upload:
   path: /path/to/upload/directory

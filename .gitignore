@@ -15,3 +15,4 @@ target/classes/com/tencent/wxcloudrun/task/ImageParseTask.class
 target/classes/mapper/CountersMapper.xml
 target/classes/mapper/ImageMapper.xml
 target/classes/static/index.html
+target/classes/db/schema.sql

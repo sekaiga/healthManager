@@ -14,7 +14,7 @@ public class ImageParseTask {
     @Autowired
     private ImageMapper imageMapper;
     
-    @Async
+    @Async("imageParseExecutor")
     public void startImageParseTask() {
         while (true) {
             try {
