@@ -232,6 +232,17 @@
     .status-completed {
       color: #5cb85c;
     }
+
+    #previewArea {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    #imagePreview {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
   </style>
 </head>
 
@@ -241,9 +252,16 @@
     
     <div class="upload-section">
       <input type="file" id="fileInput" accept="image/*" style="display: none;">
-      <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+      <button class="btn btn-primary me-2" onclick="document.getElementById('fileInput').click()">
         选择图片
       </button>
+      <button id="uploadBtn" class="btn btn-success" style="display: none;" onclick="uploadSelectedImage()">
+        上传图片
+      </button>
+      <div id="previewArea" class="mt-3" style="display: none;">
+        <img id="imagePreview" style="max-width: 300px; max-height: 300px;" class="mb-2">
+        <div class="small text-muted" id="fileName"></div>
+      </div>
       <div id="uploadStatus" class="mt-2"></div>
     </div>
 
@@ -258,19 +276,36 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+    let selectedFile = null;
+
     // 监听文件选择
     document.getElementById('fileInput').addEventListener('change', function(e) {
       if (e.target.files.length > 0) {
-        uploadImage(e.target.files[0]);
+        selectedFile = e.target.files[0];
+        // 显示预览
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('imagePreview').src = e.target.result;
+          document.getElementById('fileName').textContent = selectedFile.name;
+          document.getElementById('previewArea').style.display = 'block';
+          document.getElementById('uploadBtn').style.display = 'inline-block';
+        };
+        reader.readAsDataURL(selectedFile);
       }
     });
 
-    // 上传图片
-    function uploadImage(file) {
+    // 上传选中的图片
+    function uploadSelectedImage() {
+      if (!selectedFile) {
+        alert('请先选择图片');
+        return;
+      }
+
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', selectedFile);
 
       $('#uploadStatus').html('<span class="text-info">上传中...</span>');
+      $('#uploadBtn').prop('disabled', true);
 
       $.ajax({
         url: '/api/upload',
@@ -280,10 +315,18 @@
         contentType: false,
         success: function(response) {
           $('#uploadStatus').html('<span class="text-success">上传成功</span>');
-          fetchResults(); // 上传成功后刷新结果列表
+          // 重置选择状态
+          selectedFile = null;
+          document.getElementById('fileInput').value = '';
+          document.getElementById('previewArea').style.display = 'none';
+          document.getElementById('uploadBtn').style.display = 'none';
+          fetchResults(); // 刷新结果列表
         },
         error: function(xhr) {
           $('#uploadStatus').html('<span class="text-danger">上传失败</span>');
+        },
+        complete: function() {
+          $('#uploadBtn').prop('disabled', false);
         }
       });
     }
